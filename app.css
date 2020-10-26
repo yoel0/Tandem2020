@@ -1,0 +1,121 @@
+:root {
+  background-color: #ADEFD1;
+  /* The Default font size in most browsers is 16px.
+  62.5% of 16px is 10px so now the root font size is going to be 10px.
+  Anything now referenced with rem will be 10px. */
+  font-size: 62.5%;
+}
+
+* {
+  /* This means when adding a border to a box, 
+  it is going to include the width and the calculated size of the box. */
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+  helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 5.4rem;
+  color: #00203F;
+  margin-bottom: 5rem;
+}
+
+h1 > span {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 4.2rem;
+  margin-bottom: 4rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 2.8rem;
+  font-weight: 500;
+}
+
+/* UTILITIES */
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* This will make sure that as the screen gets bigger there will be some padding, 
+  but as it gets smaller it will take up the entire screen with 100vw and 100vh 
+  and still keep it centered */
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.container > * {
+  /* This is to make sure that any child of the container has a width of 100% 
+  in order to continue to center things horizontally */
+  width: 100%;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* BUTTONS */
+
+.btn {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+  width: 20rem;
+  text-align: center;
+  border: 0.1rem solid #00203F;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  color: #00203F;
+  background-color: white;
+}
+
+.btn:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(0, 32, 63, 0.5);
+  /* So the btn lifts in effect */
+  transform: translateY(-0.1rem);
+  /* Ease in to the effect to make it look more natural */
+  transition: transform 150ms;
+}
+
+btn[disabled]:hover {
+  /* Change the cursor so it cant be clicked and remove effects,
+  for High Scores Viewer */
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
