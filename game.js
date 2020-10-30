@@ -1,0 +1,227 @@
+const question = document.getElementById("question");
+// Convert from collection to array so we can work with the array.
+// console.log(choices);
+const choices = Array.from(document.getElementsByClassName("choice-text"));
+
+let currentQuestion = {};
+let acceptingAnswers = false;
+let score = 0;
+let questionCounter = 0;
+let availableQuestions = [];
+
+let questions = [
+  {
+    question: "What was Tandem's previous name?",
+    choice1: "Tandem",
+    choice2: "Burger Shack",
+    choice3: "Devmynd",
+    choice4: "Extraordinary Humans",
+    answer: 3
+  },
+  {
+    question: "In Shakespeare's play Julius Caesar, Caesar's last words were...",
+    choice1: "Iacta alea est!",
+    choice2: "Et tu, Brute?",
+    choice3: "Vidi, vini, vici",
+    choice4: "Aegri somnia vana",
+    answer: 2
+  },
+  {
+    question: "A group of tigers are referred to as:",
+    choice1: "Ambush",
+    choice2: "Pride",
+    choice3: "Chowder",
+    choice4: "Destruction",
+    answer: 1
+  },
+  {
+    question: "What is the top speed an average cat can travel?",
+    choice1: "13 mph",
+    choice2: "9 mph",
+    choice3: "42 mph",
+    choice4: "31 mph",
+    answer: 4
+  },
+  {
+    question: "A cat can jump to _____ times its own height:",
+    choice1: "5",
+    choice2: "9",
+    choice3: "3",
+    choice4: "7",
+    answer: 1
+  },
+  {
+    question: "What is the only letter that doesn't appear in a US state name?",
+    choice1: "Z",
+    choice2: "M",
+    choice3: "X",
+    choice4: "Q",
+    answer: 4
+  },
+  {
+    question: "What is the name for a cow-bison hybrid?",
+    choice1: "Cowson",
+    choice2: "Mooson",
+    choice3: "Beefalo",
+    choice4: "Bicow",
+    answer: 3
+  },
+  {
+    question: "What is the largest freshwater lake in the world?",
+    choice1: "Lake Superior",
+    choice2: "Lake Baikal",
+    choice3: "Lake Victoria",
+    choice4: "Lake Michigan",
+    answer: 1
+  },
+  {
+    question: "In a website address bar, what does WWW stand for?",
+    choice1: "Wild Wild West",
+    choice2: "We Will Web",
+    choice3: "World Wide Web",
+    choice4: "War World Web",
+    answer: 3
+  },
+  {
+    question: "In a game of bingo, what number is represented by the name two little ducks?",
+    choice1: "22",
+    choice2: "20",
+    choice3: "77",
+    choice4: "55",
+    answer: 1
+  },
+  {
+    question: "According to Greek mythology, who was the first woman on Earth?",
+    choice1: "Hera",
+    choice2: "Eve",
+    choice3: "Pandora",
+    choice4: "Lilith",
+    answer: 3
+  },
+  {
+    question: "In which European city would you find Orly airport?",
+    choice1: "Belgium",
+    choice2: "Paris",
+    choice3: "Munich",
+    choice4: "London",
+    answer: 2
+  },
+  {
+    question: "Where would you find the Sea of Tranquility?",
+    choice1: "Siberia",
+    choice2: "California",
+    choice3: "China",
+    choice4: "The Moon",
+    answer: 4
+  },
+  {
+    question: "Which artist painted 'Girl with a Pearl Earrin'?",
+    choice1: "Vermeer",
+    choice2: "Da Vinci",
+    choice3: "Picasso",
+    choice4: "Van Gogh",
+    answer: 1
+  },
+  {
+    question: "What is the official name for the 'hashtag' symbol?",
+    choice1: "Number Sign",
+    choice2: "Octothorpe",
+    choice3: "Hash Sign",
+    choice4: "Pound",
+    answer: 2
+  },
+  {
+    question: "Not American at all, where is apple pie from?",
+    choice1: "Canada",
+    choice2: "Ethiopia",
+    choice3: "England",
+    choice4: "Japan",
+    answer: 3
+  },
+  {
+    question: "What is the national animal of Scotland?",
+    choice1: "Unicorn",
+    choice2: "Bear",
+    choice3: "Seal",
+    choice4: "Rabbit",
+    answer: 1
+  },
+  {
+    question: "Where in the world is the only place where Canada is *due south*",
+    choice1: "Washington",
+    choice2: "Russia",
+    choice3: "Alaska",
+    choice4: "Detroit",
+    answer: 4
+  },
+  {
+    question: "Approximately how many grapes go into a bottle of wine?",
+    choice1: "200",
+    choice2: "700",
+    choice3: "500",
+    choice4: "1000",
+    answer: 2
+  },
+  {
+    question: "How much does a US One Dollar Bill cost to make?",
+    choice1: "$0.25",
+    choice2: "$1",
+    choice3: "$0.05",
+    choice4: "$5",
+    answer: 3
+  },
+  {
+    question: "The Vatican bank has the only ATM in the world that allows users to do what?",
+    choice1: "Perform transactions in Latin",
+    choice2: "Vote for the Pope",
+    choice3: "Receive withdrawls in rosary beads",
+    choice4: "Purchase indulgences",
+    answer: 1
+  }
+]
+
+// CONSTANTS
+const CORRECT_BONUS = 10;
+const MAX_QUESTIONS = 10;
+
+startGame = () => {
+  questionCounter = 0;
+  score = 0;
+  availableQuestions = [...questions];
+  // console.log(availableQuestions)
+  getNewQuestion();
+};
+
+getNewQuestion = () => {
+  if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+    // go to the end page
+    return window.location.assign('./end.html');
+  }
+  questionCounter++;
+  const questionIndex = Math.floor(Math.random() * availableQuestions.length);
+  currentQuestion = availableQuestions[questionIndex];
+  question.innerText = currentQuestion.question;
+
+  choices.forEach( choice => {
+    const number = choice.dataset['number'];
+    choice.innerText = currentQuestion['choice' + number];
+  });
+
+  availableQuestions.splice(questionIndex, 1);
+
+  acceptingAnswers = true;
+};
+
+choices.forEach(choice => {
+  choice.addEventListener('click', e => {
+    if(!acceptingAnswers) return;
+
+    acceptingAnswers = false;
+    const selectedChoice = e.target;
+    const selectedAnswer = selectedChoice.dataset['number'];
+    // console.log(selectedAnswer);
+    getNewQuestion();
+  });
+});
+
+startGame();
