@@ -193,7 +193,7 @@ startGame = () => {
 };
 
 getNewQuestion = () => {
-  if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+  if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
     // go to the end page
     return window.location.assign('./end.html');
   }
@@ -208,19 +208,25 @@ getNewQuestion = () => {
   });
 
   availableQuestions.splice(questionIndex, 1);
-
   acceptingAnswers = true;
 };
 
 choices.forEach(choice => {
   choice.addEventListener('click', e => {
-    if(!acceptingAnswers) return;
+    if (!acceptingAnswers) return;
 
     acceptingAnswers = false;
     const selectedChoice = e.target;
     const selectedAnswer = selectedChoice.dataset['number'];
-    // console.log(selectedAnswer);
-    getNewQuestion();
+
+    const classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
+
+    selectedChoice.parentElement.classList.add(classToApply);
+
+    setTimeout( () => {
+      selectedChoice.parentElement.classList.remove(classToApply);
+      getNewQuestion();
+    }, 1000);
   });
 });
 
