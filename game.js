@@ -14,12 +14,40 @@ let availableQuestions = [];
 
 let questions = [];
 
-fetch('questions.json')
+//--Uncomment to Load Local Tandem Questions/JSON--//
+// fetch('questions.json')
+//   .then((res) => {
+//     return res.json();
+//   })
+//   .then((loadedQuestions) => {
+//     questions = loadedQuestions;
+//     startGame();
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
+
+//--Fetch to TriviaDB API computer Trivia Diffculty Medium--//
+fetch('https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple')
   .then((res) => {
     return res.json();
   })
   .then((loadedQuestions) => {
-    questions = loadedQuestions;
+    questions = loadedQuestions.results.map(loadedQuestion => {
+      const formattedQuestion = {
+        question: loadedQuestion.question
+      };
+
+      const answerChoices = [...loadedQuestion.incorrect_answers];
+      formattedQuestion.answer = Math.floor(Math.random()*3) + 1;
+      answerChoices.splice(formattedQuestion.answer -1, 0, loadedQuestion.correct_answer);
+
+      answerChoices.forEach((choice, index) => {
+        formattedQuestion['choice' + (index+1)] = choice;
+      })
+
+      return formattedQuestion;
+    });
     startGame();
   })
   .catch((err) => {
@@ -34,7 +62,6 @@ startGame = () => {
   questionCounter = 0;
   score = 0;
   availableQuestions = [...questions];
-  // console.log(availableQuestions)
   getNewQuestion();
 };
 
