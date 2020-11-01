@@ -6,7 +6,7 @@
 
 2. Open the file with your IDE (VScode, Atom, Sublime etc) of choice.
 
-3. Open the index.html in your browser with ```open index.html``` cmd in your terminal or open with liveserver extention can be found [here](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+3. Open the index.html in your browser with ```open index.html``` cmd in your terminal or open with liveserver extension can be found [here](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 
 4. Have fun playing!
 ---
