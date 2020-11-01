@@ -1,4 +1,4 @@
-# Tandem Trivia By Yoel Morad
+# Tandem Trivia
 
 ### How to Install Locally
 
